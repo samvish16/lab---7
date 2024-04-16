@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Libs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+			background: url('madlib.png') center center fixed; 
+            background-size: cover;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: red;
+            font-style: italic;
+            margin-top: 50px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: yellow;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1c3c6d;
+        }
+
+        #madLibANS {
+            margin-top: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .addendum {
+            margin-top: 30px;
+            background-color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px;
+            background-color: #2E57;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1><u>Mad Libs</u></h1>
+    <form id="madLibForm">
+        <label for="adverb">Adverb:</label>
+        <input type="text" id="adverb" name="adverb" required>
+
+        <label for="pluralNoun">Plural Noun:</label>
+        <input type="text" id="pluralNoun" name="pluralNoun" required>
+
+        <label for="verb">Verb:</label>
+        <input type="text" id="verb" name="verb" required>
+
+        <label for="adjective">Adjective:</label>
+        <input type="text" id="adjective" name="adjective" required>
+
+        <label for="noun">Noun (singular):</label>
+        <input type="text" id="noun" name="noun" required>
+
+        <button type="button" onclick="generateMadLib()">Generate Mad Lib</button>
+    </form>
+    
+    <div id="madLibANS"></div>
+
+    <!-- Addendum section -->
+   <div class="addendum">
+    <h2>Addendum</h2>
+    <p>
+        This Mad Libs game was meticulously crafted to provide an engaging experience for users of all ages.
+    </p>
+    <p>
+        The HTML structure and CSS styling were designed to create an intuitive and visually appealing interface.
+    </p>
+    <p>
+        A sophisticated JavaScript function dynamically generates Mad Libs based on user inputs, adding excitement to each playthrough.
+    </p>
+    <p>
+        The footer displays the last modified date, ensuring users stay informed about updates and revisions.
+    </p>
+    <p>
+        The development process integrated HTML, JavaScript, CSS, and document management, resulting in an entertaining game.
+    </p>
+</div>
+
+
+    <footer>
+        <p>Last updated: <span id="lastModified"></span></p>
+    </footer>
+    
+    <script>
+        const madLibSentences = [
+    "In sooth, I know not why I am so ${adjective}. It wearies me; you say it wearies you; but how I caught it, found it, or came by it, What stuff 'tis made of, whereof it is born, I am to learn; and such a want-wit sadness makes of me, that I have much ado to know myself.",
+    "The ${adjective} ${noun}, the young ${noun}, and the Duke's ${noun}, these are the men that very often %verb% to the poor; and the poor men's ${pluralNoun} ${verb} them not. They that ${verb} with the wolf shall learn to ${verb} him.",
+    "Hath not a Jew eyes? Hath not a Jew hands, organs, dimensions, senses, affections, passions? Fed with the same food, hurt with the same weapons, subject to the same diseases, healed by the same means, warmed and cooled by the same winter and summer as a ${noun} is?",
+    "If you poison us, do we not die? And if you wrong us, shall we not revenge? If we are like you in the rest, we will resemble you in that. If a Jew wrong a Christian, what is his humility? Revenge. If a Christian wrong a Jew, what should his sufferance be by Christian ${noun}?",
+    "The quality of mercy is not strained. It droppeth as the gentle rain from heaven upon the place beneath. It is twice blessed: It blesseth him that gives and him that takes. 'Tis mightiest in the mightiest; it becomes the throned monarch better than his ${noun}.",
+    "The ${noun}, ${noun}, and ${noun} are of a better ${noun} than the ${adjective} ${noun} of ${noun}. And yet the ${noun} is good. The ${noun} are the ${adjective} ${pluralNoun} and the ${noun} ${verb} to the ${adjective} ${noun}."
+];
+
+
+        function generateMadLib() {
+            const adverb = document.getElementById('adverb').value;
+            const pluralNoun = document.getElementById('pluralNoun').value;
+            const verb = document.getElementById('verb').value;
+            const adjective = document.getElementById('adjective').value;
+            const noun = document.getElementById('noun').value;
+
+            if (adverb && pluralNoun && verb && adjective && noun) {
+                const randomIndex = Math.floor(Math.random() * madLibSentences.length);
+                const madLibSentence = madLibSentences[randomIndex];
+
+                const madLib = madLibSentence
+                    .replace("${adverb}", adverb)
+                    .replace("${pluralNoun}", pluralNoun)
+                    .replace("${verb}", verb)
+                    .replace("${adjective}", adjective)
+                    .replace("${noun}", noun);
+
+                document.getElementById('madLibANS').innerHTML = `<h2>Result of your Mad Lib:</h2><p>${madLib}</p>`;
+
+                document.getElementById('madLibForm').reset();
+            } else {
+                alert("Please fill in all the fields before generating the Mad Lib.");
+            }
+        }
+
+        var x = document.lastModified;
+        document.getElementById('lastModified').textContent = x;
+    </script>
+</body>
+</html>
